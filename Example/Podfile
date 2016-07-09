@@ -1,0 +1,7 @@
+platform :ios, '8.0'
+use_frameworks!
+
+source 'https://github.com/CocoaPods/Specs.git'
+
+pod 'Reveal-iOS-SDK', :configurations => ['Debug'], :inhibit_warnings => true
+pod 'Grapher', :path => '../'

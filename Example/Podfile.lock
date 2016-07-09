@@ -1,0 +1,20 @@
+PODS:
+  - Futures (2.0.2)
+  - Grapher (0.1.0):
+    - Futures
+  - Reveal-iOS-SDK (1.5.1)
+
+DEPENDENCIES:
+  - Grapher (from `../`)
+  - Reveal-iOS-SDK
+
+EXTERNAL SOURCES:
+  Grapher:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Futures: eb176c77c51ae3f8f7035ff7336a5192ab250bff
+  Grapher: b27b901749d1782161f0926d7ce41209dc72ada1
+  Reveal-iOS-SDK: dcfeb671c7da222c85f18f866da2ce88de075524
+
+COCOAPODS: 0.36.0
