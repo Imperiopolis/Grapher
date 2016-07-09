@@ -117,8 +117,8 @@ public class GraphView: UIView {
     :param: animated Animate rendering of graph data.
     */
     public func reloadData(#animated: Bool) {
-        buildPointsData() { [unowned self] in
-            self.drawPoints(animated: animated)
+        buildPointsData() { [unowned self] path in
+            self.drawPoints(animated: animated, path: path)
         }
     }
     
@@ -250,30 +250,50 @@ private class GraphPoint: Printable, Equatable {
 private extension GraphView {
     
     // Calculate normalized point data on a background queue
-    func buildPointsData(completion: dispatch_block_t) {
+    func buildPointsData(completion: (path: UIBezierPath) -> Void) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { [unowned self] in
 
             let date = NSDate()
 
             var points: [GraphPoint] = []
+            var path = UIBezierPath()
+            var previousPoint: CGPoint?
             
             for x in 0...(self.numberOfPoints() - 1) {
                 // Ideally, these could be one if-let statement
                 let (point, rawPoint) = self.normalizedPoint(x: CGFloat(x), y: self.valueForPosition(x))
                 if let point = point, rawPoint = rawPoint {
                     points.append(GraphPoint(point: point, rawPoint: rawPoint))
+
+                    if let previousPoint = previousPoint {
+                        if self.lineSmoothingStyle == .BezierCurve {
+                            let deltaX = point.x - previousPoint.x;
+                            let controlPointX = previousPoint.x + (deltaX / 2);
+
+                            let controlPoint1 = CGPointMake(controlPointX, previousPoint.y);
+                            let controlPoint2 = CGPointMake(controlPointX, point.y);
+
+                            path.addCurveToPoint(point, controlPoint1: controlPoint1, controlPoint2: controlPoint2)
+                        } else {
+                            path.addLineToPoint(point)
+                        }
+                    } else {
+                        path.moveToPoint(point)
+                    }
+                    
+                    previousPoint = point
                 }
             }
             
             self.points = points
 
-            completion()
+            completion(path: path)
         }
     }
     
     // Drawing
 
-    func drawPoints(#animated: Bool) {
+    func drawPoints(#animated: Bool, path: UIBezierPath) {
         assert(lineColor != nil, "Cannot draw points without a defined line color")
         assert(lineWidth != nil, "Cannot draw points without a defined line width")
 
@@ -282,33 +302,9 @@ private extension GraphView {
         shapeLayer.path = nil
         shapeLayer.removeAllAnimations()
 
-        var path: UIBezierPath?
-        var previousPoint: GraphPoint?
-
-        for point in points {
-            if let path = path {
-                if let previousPoint = previousPoint where lineSmoothingStyle == .BezierCurve {
-                        let deltaX = point.x - previousPoint.x;
-                        let controlPointX = previousPoint.x + (deltaX / 2);
-
-                        let controlPoint1 = CGPointMake(controlPointX, previousPoint.y);
-                        let controlPoint2 = CGPointMake(controlPointX, point.y);
-
-                        path.addCurveToPoint(point.point, controlPoint1: controlPoint1, controlPoint2: controlPoint2)
-                } else {
-                    path.addLineToPoint(point.point)
-                }
-            } else {
-                path = UIBezierPath()
-                path?.moveToPoint(point.point)
-            }
-
-            previousPoint = point
-        }
-
         styleLayer()
 
-        shapeLayer.path = path?.CGPath
+        shapeLayer.path = path.CGPath
 
         shapeLayer.needsDisplay()
 
