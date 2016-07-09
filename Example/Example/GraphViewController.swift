@@ -77,7 +77,7 @@ class GraphViewController: UIViewController {
             graphView.lineSmoothingStyle = .None
         }
 
-        title = graphType.description
+        title = graphType.description + ": " + graphStyle.description
 
         graphView.reloadData(animated: true)
     }
