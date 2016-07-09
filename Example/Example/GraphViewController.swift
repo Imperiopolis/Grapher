@@ -9,7 +9,7 @@
 import UIKit
 import Grapher
 
-enum GraphType: Equatable, Printable {
+enum GraphType: Equatable, CustomStringConvertible {
     case BezierCurveLine
     case StandardLine
 

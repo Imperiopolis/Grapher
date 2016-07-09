@@ -37,7 +37,7 @@ class TableViewController: UITableViewController {
         var data: [CGFloat] = []
 
         var previous: CGFloat?
-        for i in 1...numberOfPoints {
+        for _ in 1...numberOfPoints {
             var d: CGFloat!
             let delta: CGFloat = CGFloat(maximumValue - minimumValue) * 0.1
             if let previous = previous {
@@ -75,13 +75,13 @@ class TableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("default") as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("default")
 
         let data = cellData(indexPath)
 
-        cell.textLabel!.text = data.title
+        cell?.textLabel!.text = data.title
 
-        return cell
+        return cell!
     }
 
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

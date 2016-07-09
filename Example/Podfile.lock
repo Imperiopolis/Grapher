@@ -1,7 +1,5 @@
 PODS:
-  - Futures (2.0.2)
-  - Grapher (0.1.0):
-    - Futures
+  - Grapher (0.0.1)
   - Reveal-iOS-SDK (1.5.1)
 
 DEPENDENCIES:
@@ -13,8 +11,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  Futures: eb176c77c51ae3f8f7035ff7336a5192ab250bff
-  Grapher: b27b901749d1782161f0926d7ce41209dc72ada1
-  Reveal-iOS-SDK: dcfeb671c7da222c85f18f866da2ce88de075524
+  Grapher: 9a580ae3e60df6cb3f00f195d8484f4805672480
+  Reveal-iOS-SDK: c9c55cad2729c85f6ced415f1b21857c9a2d8ef9
 
-COCOAPODS: 0.36.0
+COCOAPODS: 0.39.0

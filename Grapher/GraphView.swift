@@ -15,7 +15,7 @@ Types representing the different graph styles.
 - Dashed:   Dashed line between points.
 - Dotted:   Dotted line between points.
 */
-public enum GraphStyle: Equatable, Printable {
+public enum GraphStyle: Equatable, CustomStringConvertible {
     case Standard
     case Dashed
     case Dotted
@@ -40,7 +40,7 @@ Defines the smoothing style of the graph.
 - None:            No smoothing is applied.
 - BezierCurve:     Smooth graph using a bezier curve between points.
 */
-public enum GraphSmoothingStyle: Equatable, Printable {
+public enum GraphSmoothingStyle: Equatable, CustomStringConvertible {
     case None
     case BezierCurve
 
@@ -114,9 +114,9 @@ public class GraphView: UIView {
     /**
     Reloads and renders all point data.
 
-    :param: animated Animate rendering of graph data.
+    - parameter animated: Animate rendering of graph data.
     */
-    public func reloadData(#animated: Bool) {
+    public func reloadData(animated animated: Bool) {
         buildPointsData() { [unowned self] path in
             self.drawPoints(animated: animated, path: path)
         }
@@ -127,7 +127,7 @@ public class GraphView: UIView {
     /**
     The total number of points to be rendered.
 
-    :returns: Number of points.
+    - returns: Number of points.
     */
     public func numberOfPoints() -> Int {
         if let dataSource = dataSource {
@@ -140,9 +140,9 @@ public class GraphView: UIView {
     /**
     The x value to graph at a specific position.
 
-    :param: position The y position for which to return an appropriate x value.
+    - parameter position: The y position for which to return an appropriate x value.
 
-    :returns: The x value for the given position.
+    - returns: The x value for the given position.
     */
     public func valueForPosition(position: Int) -> CGFloat? {
         if let dataSource = dataSource {
@@ -155,9 +155,9 @@ public class GraphView: UIView {
     /**
     Generates the x, y pairing for a given position.
 
-    :param: position The position along the y axis.
+    - parameter position: The position along the y axis.
 
-    :returns: The x, y pairing for a given position
+    - returns: The x, y pairing for a given position
     */
     public func pointForPosition(position: Int) -> CGPoint? {
         if let value = valueForPosition(position) {
@@ -191,19 +191,19 @@ public protocol Graphable: class {
     /**
     The total number of points to be rendered.
 
-    :param: graphView The requesting graph view, where the points will be rendered.
+    - parameter graphView: The requesting graph view, where the points will be rendered.
 
-    :returns: The number of points to be rendered.
+    - returns: The number of points to be rendered.
     */
     func numberOfPointsInGraphView(graphView: GraphView) -> Int
 
     /**
     The x value to graph at a specific position y.
 
-    :param: graphView        The requesting graph view, where the points will be rendered.
-    :param: valueForPosition The y position.
+    - parameter graphView:        The requesting graph view, where the points will be rendered.
+    - parameter valueForPosition: The y position.
 
-    :returns: The x value for the given position y.
+    - returns: The x value for the given position y.
     */
     func graphView(graphView: GraphView, valueForPosition: Int) -> CGFloat?
 }
@@ -213,7 +213,7 @@ private func ==(lhs: GraphPoint, rhs: GraphPoint) -> Bool {
     return lhs.point == rhs.point && lhs.rawPoint == rhs.rawPoint
 }
 
-private class GraphPoint: Printable, Equatable {
+private class GraphPoint: CustomStringConvertible, Equatable {
     init(point p: CGPoint, rawPoint r: CGPoint) {
         point = p
         rawPoint = r
@@ -253,10 +253,8 @@ private extension GraphView {
     func buildPointsData(completion: (path: UIBezierPath) -> Void) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { [unowned self] in
 
-            let date = NSDate()
-
             var points: [GraphPoint] = []
-            var path = UIBezierPath()
+            let path = UIBezierPath()
             var previousPoint: CGPoint?
             
             for x in 0...(self.numberOfPoints() - 1) {
@@ -293,11 +291,9 @@ private extension GraphView {
     
     // Drawing
 
-    func drawPoints(#animated: Bool, path: UIBezierPath) {
+    func drawPoints(animated animated: Bool, path: UIBezierPath) {
         assert(lineColor != nil, "Cannot draw points without a defined line color")
         assert(lineWidth != nil, "Cannot draw points without a defined line width")
-
-        let date = NSDate()
 
         shapeLayer.path = nil
         shapeLayer.removeAllAnimations()
@@ -360,7 +356,7 @@ private extension GraphView {
     
     // Normalizing
     
-    func normalizedPoint(#x: CGFloat?, y: CGFloat?) -> (CGPoint?, CGPoint?) {
+    func normalizedPoint(x x: CGFloat?, y: CGFloat?) -> (CGPoint?, CGPoint?) {
         if let rawX = x, rawY = y {
             let rawPoint = CGPointMake(rawX, rawY)
             var point: CGPoint?

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2DB791451ABE26BA00CEE37E /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB791441ABE26BA00CEE37E /* TableViewController.swift */; };
-		A8BB7AC0E356907F2B36D13D /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA3A014976F265BB0DE9865 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		A8BB7AC0E356907F2B36D13D /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA3A014976F265BB0DE9865 /* Pods.framework */; };
 		D8093AC51AB6551800282415 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8093AC41AB6551800282415 /* AppDelegate.swift */; };
 		D8093ACC1AB6551800282415 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8093ACB1AB6551800282415 /* Images.xcassets */; };
 		D8093ACF1AB6551800282415 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8093ACD1AB6551800282415 /* LaunchScreen.xib */; };
@@ -125,7 +125,8 @@
 		D8093AB51AB6543A00282415 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
 				TargetAttributes = {
 					D8093ABE1AB6551800282415 = {
 						CreatedOnToolsVersion = 6.3;
@@ -238,6 +239,8 @@
 		D8093AB91AB6543A00282415 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
@@ -290,6 +293,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.trappdesign.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -333,6 +337,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.trappdesign.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
